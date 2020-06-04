@@ -1,5 +1,5 @@
 <?php
-namespace app\api\controller;
+namespace app\user\controller;
 
 class Api 
 {   
@@ -8,6 +8,10 @@ class Api
         return 'hello';
     }
     
+    public function login()
+    {
+        return 666;
+    }
 }
 
 
