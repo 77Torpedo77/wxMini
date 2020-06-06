@@ -4,6 +4,8 @@ namespace app\user\controller;
 use AipOcr\AipOcr;
 use think\console\command\make\Controller;
 use think\facade\Request;
+use app\user\model\Users;
+
 //curl_setopt($ch, CURLOPT_POST, 1);
 class Api extends Controller
 {   
@@ -23,22 +25,7 @@ class Api extends Controller
 
     }
 
-    public function curl_get($url)
-    {
-        $ci = curl_init();
-        /* Curl settings */
-        curl_setopt($ci, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
 
-        curl_setopt($ci, CURLOPT_URL, $url);
-        $response = curl_exec($ci);
-
-        curl_close($ci);
-        $info = json_decode($response, TRUE);
-        return $info;
-    }
     /**
      * 图片识别接口（post）
      * 请求参数：
@@ -58,7 +45,7 @@ class Api extends Controller
 
         $client = new AipOcr($APP_ID, $API_KEY, $SECRET_KEY);
         $image = Request::post('image');
-        $image = base64_decode(explode(',',$image)[1]);
+       // $image = base64_decode(explode(',',$image)[1]);
         
         // 调用通用文字识别（高精度版）
         $client->basicAccurate($image);
@@ -70,6 +57,29 @@ class Api extends Controller
 
         // 带参数调用通用文字识别（高精度版）
         return json($client->basicAccurate($image, $options));
+    }
+
+    public function curl_get($url)
+    {
+        $ci = curl_init();
+        /* Curl settings */
+        curl_setopt($ci, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ci, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ci, CURLOPT_URL, $url);
+        $response = curl_exec($ci);
+
+        curl_close($ci);
+        $info = json_decode($response, TRUE);
+        return $info;
+    }
+
+    public function check_five_times($openid)
+    {
+        $auser = new Users();
+
     }
 }
 
