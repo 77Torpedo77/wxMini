@@ -5,6 +5,7 @@ use AipOcr\AipOcr;
 use think\console\command\make\Controller;
 use think\facade\Request;
 use app\user\model\Users;
+use app\user\model\Config;
 
 //curl_setopt($ch, CURLOPT_POST, 1);
 class Api extends Controller
@@ -42,6 +43,7 @@ class Api extends Controller
         $APP_ID = '20249056';
         $API_KEY = 'c6XL0H0l9q6HGa5CmfYvICeX';
         $SECRET_KEY = 'HBA0KMzG0TphKwYC0PL5aV7U0s1oIB0F';
+        $admin_name = 'star';//管理员名称
 
         $client = new AipOcr($APP_ID, $API_KEY, $SECRET_KEY);
         $image = Request::post('image');
@@ -55,8 +57,24 @@ class Api extends Controller
         $options["detect_direction"] = "true";
         $options["language_type"] = Request::post('language');
 
-        // 带参数调用通用文字识别（高精度版）
-        return json($client->basicAccurate($image, $options));
+        //验证是否达到次数
+        $config = Config::where('username', $admin_name)->find();
+        if ($config->open_times_limit == 1) {
+            try {
+                $this->check_five_times(Request::post('openid'));
+                return json($client->basicAccurate($image, $options));
+            } catch (\Exception $e) {
+                $einfo['errcode'] = $e->getCode();
+                $einfo['errmsg'] = $e->getMessage();
+                return json($einfo);
+            }
+        }
+        elseif ($config->open_times_limit == 0) {
+            return json($client->basicAccurate($image, $options));
+        }
+        else{
+            return '出错了，请联系管理员';
+        }
     }
 
     public function curl_get($url)
@@ -76,9 +94,35 @@ class Api extends Controller
         return $info;
     }
 
-    public function check_five_times($openid)
+    public function check_five_times($openid = '666')
     {
-        $auser = new Users();
+        $now = strtotime("now");
+        $olduser = Users::where('openid',$openid)->find();
+        if (!isset($olduser)) {
+            $auser = new Users();
+            $auser->openid = $openid;
+            $auser->times = 0;
+            $auser->day = $now;
+            $auser->save();
+        }
+        $olduser = Users::where('openid', $openid)->find();
+        //判断是否过了一天
+       ;
+        $isTmr = date('d', $now) - date('d',$olduser->day);
+
+        if ($olduser->times == 5 && $isTmr == 0) {
+            throw new \Exception("今日尝试次数已到五次", -1);
+        }
+        //第二天再调用首先清空次数
+        elseif ($isTmr>0) {
+            $olduser->times = 0;
+            $olduser->day = $now;
+            $olduser->save();
+        }
+        $olduser->times = $olduser->times + 1;
+        $olduser->save();
+        return true;
+
 
     }
 }
