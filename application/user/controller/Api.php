@@ -46,7 +46,7 @@ class Api extends Controller
         $client = new AipOcr($APP_ID, $API_KEY, $SECRET_KEY);
         $image = Request::post('image');
        // $image = base64_decode(explode(',',$image)[1]);
-        
+        $image = base64_decode($image);
         // 调用通用文字识别（高精度版）
         $client->basicAccurate($image);
 
