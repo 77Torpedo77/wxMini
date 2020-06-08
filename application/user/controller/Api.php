@@ -103,11 +103,18 @@ class Api extends Controller
            $return_data['errmsg'] = '有参数为空';
            return json($return_data);
         }
-        $canUseData = $this->data_process($data);
+        try {
+            $canUseData = $this->data_process($data);
+        } catch (\Exception $e) {
+            $einfo['errcode'] = $e->getCode();
+            $einfo['errmsg'] = $e->getMessage();
+            return json($einfo);
+        }
         $map[0] = $language;
         foreach ($canUseData as $key => $value) {
             $map[$key+1] = ['like','%'.trim($value).'%'];
         }
+        $map[$key+2] = ['like','*****************'];//tp5设计缺陷，whereor必须传两个，所以在后面加一个不可能查询到的条件防止出错
         $harm = Element::whereOr([$map])->select();
         for ($i=0; $i < count($harm); $i++) { 
             $return_data[$i]['element'] = $harm[$i]->$language;
@@ -124,11 +131,17 @@ class Api extends Controller
             throw new \Exception("传入数据为空", -1);
         }
         preg_match_all("/,|，| |、/U", $data, $out);
+        if (empty($out[0])) {
+            return array($data);
+        }
         $out = array_count_values($out[0]);
         arsort($out);
         $separator = array_keys($out)[0];
         $res = explode($separator, $data);
-        return $res;
+        if (empty(array_filter($res)[0])) {
+            throw new \Exception("传入数据格式有误", -1);
+        }
+        return array_filter($res);
     }
 
     function curl_get($url)
