@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="container">
+                <a class="btn btn-default btn-lg" href="/user/admin/" role="button">首页</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/elementlist/" role="button">成分列表</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/add/" role="button">增加成分</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/setting/" role="button">设置</a>
+            </div>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>中文名</th>
+                            <th>英文名</th>
+                            <th>日文名</th>
+                            <th>韩文名</th>
+                            <th>别名</th>
+                            <th>危害</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach $element_list as $aelement}
+                            <tr>
+                                <th>{$aelement.id}</th>
+                                <th>{$aelement.chn}</th>
+                                <th>{$aelement.eng}</th>
+                                <th>{$aelement.jap}</th>
+                                <th>{$aelement.kor}</th>
+                                <th>{$aelement.alias}</th>
+                                <th>{$aelement.harm}</th>
+                                <th><a class="btn btn-default btn-sm" href="/user/admin/remove/remove_id/{$aelement.id}/" role="button">删除</a></th>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

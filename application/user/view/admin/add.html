@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="container">
+            <a class="btn btn-default btn-lg" href="/user/admin/" role="button">首页</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/elementlist/" role="button">成分列表</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/add/" role="button">增加成分</a>
+            <a class="btn btn-default btn-lg" href="/user/admin/setting/" role="button">设置</a>
+            </div>
+            <div class="container">
+                <form method="post" action="/user/admin/add/">
+                    <div class="form-group">
+                        <label for="names1">中文名</label>
+                        <input type="text" class="form-control" id="names1" name="name1" placeholder="中文名">
+                    </div>
+                    <div class="form-group">
+                        <label for="names2">英文名</label>
+                        <input type="text" class="form-control" id="names2" name="name2" placeholder="英文名">
+                    </div>
+                    <div class="form-group">
+                        <label for="names3">日文名</label>
+                        <input type="text" class="form-control" id="names3" name="name3" placeholder="日文名">
+                    </div>
+                    <div class="form-group">
+                        <label for="names4">韩文名</label>
+                        <input type="text" class="form-control" id="names4" name="name4" placeholder="韩文名">
+                    </div>
+                    <div class="form-group">
+                        <label for="names5">别名</label>
+                        <input type="text" class="form-control" id="names5" name="name5" placeholder="别名">
+                    </div>
+                    <div class="form-group">
+                        <label for="harm">危害</label>
+                        <input type="text" class="form-control" id="harm" name="harm" placeholder="危害">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-default" id="submit" name="submit" value="yes">提交</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
