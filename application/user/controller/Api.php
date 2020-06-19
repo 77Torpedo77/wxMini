@@ -112,9 +112,11 @@ class Api extends Controller
         }
         $map[0] = $language;
         foreach ($canUseData as $key => $value) {
-            $map[$key+1] = ['like','%'.trim($value).'%'];
+            //$map[$key+1] = ['like','%'.trim($value).'%'];
+            $map[$key + 1] = ['like',trim($value)];
         }
-        $map[$key+2] = ['like','*****************'];//tp5设计缺陷，whereor必须传两个，所以在后面加一个不可能查询到的条件防止出错
+       // $map[$key+2] = ['like','*****************']; //tp5设计缺陷，whereor必须传两个，所以在后面加一个不可能查询到的条件防止出错
+        $map[$key + 2] = ['like','*****************'];
         $harm = Element::whereOr([$map])->select();
         if (empty($harm[0])) {
             $return_data['errcode'] = -1;

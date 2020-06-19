@@ -24,7 +24,6 @@ class Admin extends \think\Controller
             $this->redirect("/user/admin/");
         }
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
-            print_r($_POST['username']);
             $admin = $this->ConfigModel->where("username", $_POST['username'])->find();
             if ($admin->username == $_POST['username'] && $admin->password == md5($_POST['password'])) {
                 $_SESSION['islogin'] = $admin;
