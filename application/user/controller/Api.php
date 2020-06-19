@@ -123,7 +123,10 @@ class Api extends Controller
             $return_data['errmsg'] = '未查询到结果';
             return json($return_data);
         }
-        for ($i=0; $i < count($harm); $i++) { 
+        for ($i=0; $i < count($harm); $i++) {
+            if ($language != 'chn') {
+                $return_data[$i]['chn'] = $harm[$i]->chn;
+            } 
             $return_data[$i]['element'] = $harm[$i]->$language;
             $return_data[$i]['alias'] = $harm[$i]->alias;
             $return_data[$i]['harm'] = $harm[$i]->harm;
