@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1:3306
--- 生成日期： 2020-06-18 08:52:23
+-- 生成日期： 2020-06-21 18:02:55
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.2.18
 
@@ -52,14 +52,15 @@ INSERT INTO `config` (`id`, `open_times_limit`, `username`, `password`) VALUES
 
 DROP TABLE IF EXISTS `element`;
 CREATE TABLE IF NOT EXISTS `element` (
-  `id` int(2) DEFAULT NULL,
+  `id` int(2) NOT NULL AUTO_INCREMENT,
   `chn` varchar(17) DEFAULT NULL,
   `eng` varchar(31) DEFAULT NULL,
   `jap` varchar(18) DEFAULT NULL,
   `kor` varchar(29) DEFAULT NULL,
   `alias` varchar(25) DEFAULT NULL,
-  `harm` varchar(139) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `harm` varchar(139) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `element`
@@ -116,13 +117,14 @@ INSERT INTO `element` (`id`, `chn`, `eng`, `jap`, `kor`, `alias`, `harm`) VALUES
 
 DROP TABLE IF EXISTS `element_tset`;
 CREATE TABLE IF NOT EXISTS `element_tset` (
-  `id` int(2) DEFAULT NULL,
+  `id` int(2) NOT NULL,
   `chn` varchar(4) DEFAULT NULL,
   `eng` varchar(30) DEFAULT NULL,
   `jap` varchar(7) DEFAULT NULL,
   `kor` varchar(8) DEFAULT NULL,
   `alias` varchar(7) DEFAULT NULL,
-  `harm` varchar(7) DEFAULT NULL
+  `harm` varchar(7) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
