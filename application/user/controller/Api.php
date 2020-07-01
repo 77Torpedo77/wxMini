@@ -49,7 +49,9 @@ class Api extends Controller
         $data = array('scene'=>'123456');
         $res = $this->curl_post($url,$data);
         //return json($res);
-        return ($res);
+        file_put_contents('image.jpg',$res);
+        $request = Request::instance();
+        return ($request->domain() .'/image.jpg');
     }
 
 
