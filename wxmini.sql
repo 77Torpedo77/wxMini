@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1:3306
--- 生成日期： 2020-06-21 18:02:55
+-- 生成日期： 2020-07-01 16:14:47
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.2.18
 
@@ -156,6 +156,27 @@ INSERT INTO `element_tset` (`id`, `chn`, `eng`, `jap`, `kor`, `alias`, `harm`) V
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE IF NOT EXISTS `token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` text NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `token`
+--
+
+INSERT INTO `token` (`id`, `token`, `time`) VALUES
+(30, '34_ZgQx5j1BaP5mvvXYO0Pf99Rh5JaDtuk7lXhSm1w_ZuWbN4BGDmiMHF33kbe7SGID1IBq5m9tsSyGnYisYZM1DM6Hwt7FQ6dy4-LicyAFwAoiMaTUx7Ag8tC0kk0anMFcPeH-6lEgMTC3ZmcHSUOjAAAMOI', 1593616504);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `users`
 --
 
@@ -164,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `openid` text,
   `times` int(8) NOT NULL DEFAULT '0',
-  `day` int(16) DEFAULT NULL,
+  `day` int(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 

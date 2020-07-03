@@ -170,8 +170,10 @@ class Api extends Controller
         $out = array_count_values($out[0]);
         arsort($out);
         $separator = array_keys($out)[0];
-        $res = explode($separator, $data);
-        if (empty(array_filter($res)[0])) {
+        //$res = explode($separator, $data);
+        $res = preg_split("/(【|】|：|:|$separator)/", $data);
+        $res = array_values(array_filter($res));//去掉空值并使下标重新从0开始
+        if (empty($res[0])) {
             throw new \Exception("传入数据格式有误", -1);
         }
         return array_filter($res);
@@ -289,7 +291,9 @@ class Api extends Controller
 
     function test()
     {
-        phpinfo();
+        $data = '【成分】：乙醇，哈哈';
+        $data = $this->data_process($data);
+        print_r($data);
     }
     function api_notice_increment($url, $data)
     {
