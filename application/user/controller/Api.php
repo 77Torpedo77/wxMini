@@ -9,6 +9,8 @@ use app\user\model\Config;
 use app\user\model\Element;
 use app\user\model\Token;
 use think\Controller;
+use Think\Upload;
+use Think\Page;
 
 class Api extends Controller
 {   
@@ -158,6 +160,23 @@ class Api extends Controller
         return json($return_data);
     }
 
+    public function upLoad()
+    {
+        $file = request()->file('image');
+        // 移动到框架应用根目录/uploads/ 目录下
+        $info = $file->move('./uploads');
+        if ($info) {
+            // 成功上传后 获取上传信息
+            // 输出 jpg
+            $request = Request::instance();
+            return ($request->domain() . '/uploads/'.$info->getSaveName());
+        } else {
+            // 上传失败获取错误信息
+            echo $file->getError();
+        }
+    
+    }
+
     function data_process($data = '')
     {
         if ($data == '') {
@@ -295,7 +314,7 @@ class Api extends Controller
         $data = $this->data_process($data);
         print_r($data);
     }
-    function api_notice_increment($url, $data)
+    function api_notice_increment($url, $data)//curl_post原型
     {
         $data = json_encode($data);
         $ch = curl_init();
