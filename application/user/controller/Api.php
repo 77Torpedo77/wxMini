@@ -162,8 +162,9 @@ class Api extends Controller
 
     public function upLoad()
     {
+        $this->check_day7();
         $file = request()->file('image');
-        // 移动到框架应用根目录/uploads/ 目录下
+        // 移动到框架public/uploads目录下
         $info = $file->move('./uploads');
         if ($info) {
             // 成功上传后 获取上传信息
@@ -308,11 +309,22 @@ class Api extends Controller
         return $oldtoken->token;
     }
 
-    function test()
+    function check_day7()
     {
-        $data = '【成分】：乙醇，哈哈';
-        $data = $this->data_process($data);
-        print_r($data);
+        $dir = '.\uploads';
+        $dh = opendir($dir);
+        $day7_ago = strtotime("-1 week");
+        while ($file = readdir($dh)) {
+            if ($file != "." && $file != "..") 
+            {
+                $is_day7 = date('Ymd', $day7_ago) - $file;
+                if ($is_day7 >= 0) {
+                    $fullpath = $dir . "/" . $file;
+                    $this->deldir($fullpath);
+                }
+            }
+        }
+        closedir($dh);
     }
     function api_notice_increment($url, $data)//curl_post原型
     {
@@ -337,6 +349,30 @@ class Api extends Controller
             return false;
         } else {
             return $tmpInfo;
+        }
+    }
+
+    function deldir($dir)
+    {
+        //先删除目录下的文件：
+        $dh = opendir($dir);
+        while ($file = readdir($dh)) {
+            if ($file != "." && $file != "..") {
+                $fullpath = $dir . "/" . $file;
+                if (!is_dir($fullpath)) {
+                    unlink($fullpath);
+                } else {
+                    $this->deldir($fullpath);
+                }
+            }
+        }
+
+        closedir($dh);
+        //删除当前文件夹：
+        if (rmdir($dir)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
