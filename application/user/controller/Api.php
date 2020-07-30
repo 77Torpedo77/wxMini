@@ -162,7 +162,8 @@ class Api extends Controller
 
     public function upLoad()
     {
-        $this->check_day7();
+        $dir = './uploads';
+        $this->check_day7($dir);
         $file = request()->file('image');
         // 移动到框架public/uploads目录下
         $info = $file->move('./uploads');
@@ -309,9 +310,8 @@ class Api extends Controller
         return $oldtoken->token;
     }
 
-    function check_day7()
+    function check_day7($dir)
     {
-        $dir = '.\uploads';
         $dh = opendir($dir);
         $day7_ago = strtotime("-1 week");
         while ($file = readdir($dh)) {
