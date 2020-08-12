@@ -44,6 +44,26 @@ class Api extends Controller
         return json($res['openid']);
     }
 
+    public function subscribe()
+    {
+        $token = $this->getToken();
+        $openid = Request::get('openid');
+        if (empty($openid)) {
+            $return_data['errcode'] = -1;
+            $return_data['errmsg'] = '登录openid为空，请检查';
+            return json($return_data);
+        }
+        if (empty($token)) {
+            $return_data['errcode'] = -1;
+            $return_data['errmsg'] = 'token有误';
+            return json($return_data);
+        }
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
+        $res = $this->curl_get($url);
+       // return json($res['subscribe']);
+        return json($res);
+    }
+
     public function getImage()
     {
         $token = $this->getToken();
