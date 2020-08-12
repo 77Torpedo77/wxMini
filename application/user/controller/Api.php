@@ -60,7 +60,7 @@ class Api extends Controller
         }
         $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         $res = $this->curl_get($url);
-       // return json($res['subscribe']);
+       /// return json($res['subscribe']);
         return json($res);
     }
 
