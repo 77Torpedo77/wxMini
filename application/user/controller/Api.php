@@ -17,8 +17,9 @@ class Api extends Controller
     function initialize()
     {
         session_start();
-        $this->appid ='wxb780f2caed5651b3';
-        $this->secret = '9c5743bfa94f66d64ce4d180f6cc1353';
+        //$this->appid ='wxb780f2caed5651b3';
+        $this->appid = 'wx15f102d7e0f36519';//甲方的
+        $this->secret = '5c0b8dbc65183893e4a096e01d8b749d';//甲方的
         $this->APP_ID = '20249056';
         $this->API_KEY = 'c6XL0H0l9q6HGa5CmfYvICeX';
         $this->SECRET_KEY = 'HBA0KMzG0TphKwYC0PL5aV7U0s1oIB0F';
@@ -41,7 +42,9 @@ class Api extends Controller
         }
         $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appid. '&secret=' . $secret . '&js_code=' . $code . '&grant_type=authorization_code';
         $res = $this->curl_get($url);
-        return json($res['openid']);
+        //return json($res['openid']);
+        return json($res);
+
     }
 
     public function subscribe()
