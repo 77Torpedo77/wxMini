@@ -152,7 +152,7 @@ class Api extends Controller
            return json($return_data);
         }
         try {
-            $canUseData = $this->data_process($data);
+            $canUseData = $this->data_process($data,$language);
         } catch (\Exception $e) {
             $einfo['errcode'] = $e->getCode();
             $einfo['errmsg'] = $e->getMessage();
@@ -194,7 +194,7 @@ class Api extends Controller
             // 成功上传后 获取上传信息
             // 输出 jpg
             $request = Request::instance();
-            return ($request->domain() . '/uploads/'.$info->getSaveName());
+            return urlencode($request->domain() . '/uploads/'.$info->getSaveName());
         } else {
             // 上传失败获取错误信息
             echo $file->getError();
@@ -202,12 +202,18 @@ class Api extends Controller
     
     }
 
-    function data_process($data = '')
+    function data_process($data = '',$language)
     {
         if ($data == '') {
             throw new \Exception("传入数据为空", -1);
         }
-        preg_match_all("/,|，| |、/U", $data, $out);
+        if ($language == "eng") {
+            preg_match_all("/,|，|、/U", $data, $out);//选择这几个符号多的那个为分隔符,若为英文则空格不作为分隔符
+        }
+        else{
+            preg_match_all("/,|，| |、/U", $data, $out);//选择这几个符号多的那个为分隔符
+        }
+        
         if (empty($out[0])) {
             return array($data);
         }

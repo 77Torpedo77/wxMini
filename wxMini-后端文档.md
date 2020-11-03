@@ -138,9 +138,106 @@ o5B384lpOM8FkgYghyPrg0PciSW0//用户的openid
 ```javascript
 错误信息由微信返回
 ```
+## subscribe
+检查是否关注了公众号的接口
+#### 接口URL
+> https://www.example.com/user/api/subscribe
 
+#### 请求方式
+> GET
+
+#### Content-Type
+> multipart/form-data
+
+#### 请求Query参数
+
+| 参数        | 示例值   | 是否必填   |  参数描述  |
+| :--------   | :-----  | :-----  | :----  |
+| openid     | thisisopenid | 必填 | - |
+
+
+
+
+
+
+#### 成功响应示例
+```javascript
+json数据，其中有['subscribe']
+```
+
+
+#### 错误响应示例
+```javascript
+错误信息由微信返回，非微信返回的错误有明确提示，略过
+```
+
+## getImage
+获取小程序码
+#### 接口URL
+> https://www.example.com/user/api/getImage
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> multipart/form-data
+
+#### 请求Query参数
+
+| 参数        | 示例值   | 是否必填   |  参数描述  |
+| :--------   | :-----  | :-----  | :----  |
+| 无    |  |  | - |
+
+
+
+
+
+
+#### 成功响应示例
+```javascript
+小程序码存储地址
+```
+
+
+#### 错误响应示例
+```javascript
+错误信息由微信返回
+```
+
+## upLoad
+上传图片
+#### 接口URL
+> https://www.example.com/user/api/upLoad
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> multipart/form-data
+
+#### 请求Body参数
+
+| 参数        | 示例值   | 是否必填   |  参数描述  |
+| :--------   | :-----  | :-----  | :----  |
+| image    | .\123.png | 必填 | - |
+
+
+
+
+
+
+#### 成功响应示例
+```javascript
+上传图片的存储路径
+```
+
+
+#### 错误响应示例
+```javascript
+
+```
 #参数设置文档
-以下参数均在\application\user\controller\api.php\对应方法
+以下参数均在\application\user\controller\api.php\initialize方法
 |参数名 |  方法 |说明|
 |---|---|---|
 |appid |  login  |微信appid|
