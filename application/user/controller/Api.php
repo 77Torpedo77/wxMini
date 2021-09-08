@@ -208,10 +208,10 @@ class Api extends Controller
             throw new \Exception("传入数据为空", -1);
         }
         if ($language == "eng") {
-            preg_match_all("/,|，|、/U", $data, $out);//选择这几个符号多的那个为分隔符,若为英文则空格不作为分隔符
+            preg_match_all("/,|，|、|【|】|：|:|。|\.|/U", $data, $out);//选择这几个符号多的那个为分隔符,若为英文则空格不作为分隔符
         }
         else{
-            preg_match_all("/,|，| |、/U", $data, $out);//选择这几个符号多的那个为分隔符
+            preg_match_all("/,|，| |、|【|】|：|:|。|\./U", $data, $out);//选择这几个符号多的那个为分隔符
         }
         
         if (empty($out[0])) {
@@ -221,8 +221,13 @@ class Api extends Controller
         arsort($out);
         $separator = array_keys($out)[0];
         //$res = explode($separator, $data);
-        $res = preg_split("/(【|】|：|:|$separator)/", $data);
-        $res = array_values(array_filter($res));//去掉空值并使下标重新从0开始
+        if ($separator == ".") {
+            $res = preg_split("/(【|】|：|:|。|\.)/", $data);//若是.需要做转义处理
+        }
+        else{
+            $res = preg_split("/(【|】|：|:|。|\.|$separator)/", $data);
+        }
+        $res = array_values(array_filter($res)); //去掉空值并使下标重新从0开始
         if (empty($res[0])) {
             throw new \Exception("传入数据格式有误", -1);
         }
