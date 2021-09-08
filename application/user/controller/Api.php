@@ -208,7 +208,7 @@ class Api extends Controller
             throw new \Exception("传入数据为空", -1);
         }
         if ($language == "eng") {
-            preg_match_all("/,|，|、|【|】|：|:|。|\.|/U", $data, $out);//选择这几个符号多的那个为分隔符,若为英文则空格不作为分隔符
+            preg_match_all("/,|，|、|【|】|：|:|。|\./U", $data, $out);//选择这几个符号多的那个为分隔符,若为英文则空格不作为分隔符
         }
         else{
             preg_match_all("/,|，| |、|【|】|：|:|。|\./U", $data, $out);//选择这几个符号多的那个为分隔符
